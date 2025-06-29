@@ -1,4 +1,3 @@
-# GeminiPulse – Context‑Weaving CLI for Google Gemini
 
 # GeminiPulse — Context‑Weaving CLI for Google Gemini
 _Single‑script shell tool that feeds Gemini your code, diffs & deps for smarter, project‑aware answers._
