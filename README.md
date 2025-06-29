@@ -1,6 +1,78 @@
 # GeminiPulse – Context‑Weaving CLI for Google Gemini
 
-**GeminiPulse** is a *single, portable shell script* that super‑charges the official [`gemini-cli`](https://github.com/google-gemini/gemini-cli) by weaving rich project context into every prompt. No daemons, no background services—just drop it into your repo and watch your AI responses become razor‑sharp.
+# GeminiPulse — Context‑Weaving CLI for Google Gemini
+_Single‑script shell tool that feeds Gemini your code, diffs & deps for smarter, project‑aware answers._
+
+<p align="center">
+  <!-- latest release -->
+  <img src="https://img.shields.io/github/v/release/itsbryanman/gemini-pulse?style=for-the-badge" alt="Latest release">
+
+  <!-- build status (adjust workflow filename if needed) -->
+  <img src="https://img.shields.io/github/actions/workflow/status/itsbryanman/gemini-pulse/test.yml?branch=main&style=for-the-badge" alt="Build">
+
+  <!-- main language -->
+  <img src="https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnu-bash&logoColor=white&style=for-the-badge" alt="Shell">
+
+  <!-- POSIX support -->
+  <img src="https://img.shields.io/badge/POSIX-✔-blue?style=for-the-badge" alt="POSIX‑Compliant">
+
+  <!-- tests passing (generic badge; swap if you wire up coverage) -->
+  <img src="https://img.shields.io/badge/Tests-Passing-brightgreen?style=for-the-badge" alt="Tests">
+
+  <!-- license -->
+  <img src="https://img.shields.io/github/license/itsbryanman/gemini-pulse?style=for-the-badge" alt="MIT License">
+
+  <!-- Google Gemini badge -->
+  <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Powered by Google Gemini">
+</p>
+
+---
+
+<!-- ────── REPO INSIGHTS ────── -->
+## 📊 Repo Insights
+
+<p align="center">
+  <!-- top languages -->
+  <a href="https://github.com/itsbryanman/gemini-pulse">
+    <img
+      src="https://github-readme-stats.vercel.app/api/top-langs/?username=itsbryanman&layout=compact&theme=radical&hide_border=true&card_width=445&langs_count=8"
+      alt="Top Languages"
+    />
+  </a>
+</p>
+
+<p align="center">
+  <!-- lines of code (shields / tokei) -->
+  <img
+    src="https://img.shields.io/tokei/lines-of-code/github/itsbryanman/gemini-pulse?style=flat-square"
+    alt="Lines of Code"
+  />
+
+  <!-- visitor counter -->
+  <a href="https://visitor-badge.laobi.icu/badge?page_id=itsbryanman.gemini-pulse">
+    <img
+      src="https://visitor-badge.laobi.icu/badge?page_id=itsbryanman.gemini-pulse&style=flat-square&color=brightgreen"
+      alt="Visitors"
+    />
+  </a>
+
+  <!-- maintained badge -->
+  <img
+    src="https://img.shields.io/maintenance/yes/2025?style=flat-square&color=success"
+    alt="Maintained"
+  />
+</p>
+
+<!-- ────── TECH STACK ────── -->
+## 🛠️ Tech Stack
+
+<p align="center">
+  <img src="https://img.shields.io/badge/-Bash-4EAA25?logo=gnu-bash&logoColor=white&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/-Git-F05032?logo=git&logoColor=white&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/-Gemini-4285F4?logo=google&logoColor=white&style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" />
+</p>
+Gemini Pulse is a  *single, portable shell script* that super‑charges the official [`gemini-cli`](https://github.com/google-gemini/gemini-cli) by weaving rich project context into every prompt. No daemons, no background services—just drop it into your repo and watch your AI responses become razor‑sharp.
 
 ```
  ██████╗ ███████╗███╗   ███╗██╗███╗   ██╗██╗                            ██████╗ ██╗   ██╗██╗     ███████╗███████╗    
@@ -203,3 +275,11 @@ Pull requests welcome. Keep it POSIX, keep it readable. All new verbs **must** f
 ## 15 License
 
 MIT © 2025 \Bryan Cruse\thecorneroftheweb.com
+
+## if you liked what i made
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/itsbryandude)
+<a href="https://coff.ee/bryanc910">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png"
+       width="140" alt="Buy Me A Coffee">
+</a>
+
