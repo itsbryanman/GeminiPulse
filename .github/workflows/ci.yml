@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y shellcheck
+          # — optional — install gemini-cli if you want deeper tests
+          # curl -sSL https://raw.githubusercontent.com/google-gemini/gemini-cli/main/install.sh | bash
+
+      - name: Static analysis (ShellCheck)
+        run: |
+          shellcheck gpulse.sh
+
+      - name: Smoke‑test gpulse
+        run: |
+          chmod +x gpulse.sh
+          ./gpulse.sh --help
