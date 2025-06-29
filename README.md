@@ -37,10 +37,10 @@ _Single‑script shell tool that feeds Gemini your code, diffs & deps for sm
 
 <p align="center">
   <!-- lines of code (shields / tokei) -->
-  <img
-    src="https://img.shields.io/tokei/lines-of-code/github/itsbryanman/gemini-pulse?style=flat-square"
-    alt="Lines of Code"
-  />
+ <img
+  src="https://img.shields.io/tokei/lines-of-code/github/itsbryanman/GeminiPulse?style=flat-square"
+  alt="Lines of Code"
+/>
 
   <!-- visitor counter -->
   <a href="https://visitor-badge.laobi.icu/badge?page_id=itsbryanman.gemini-pulse">
