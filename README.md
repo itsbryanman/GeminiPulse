@@ -1,5 +1,5 @@
-# **GeminiPulse** — Context‑Weaving CLI for Google Gemini  
-Single‑script shell tool that feeds Gemini your code, diffs & deps for smarter, project‑aware answers.
+# **GeminiPulse** — Context‑Weaving CLI for Google Gemini  
+Single‑script shell tool that feeds Gemini your code, diffs & deps for smarter, project‑aware answers.
 
 <p align="center">
   <!-- language -->
@@ -39,43 +39,42 @@ Single‑script shell tool that feeds Gemini your code, diffs & deps for sma
 ```
 
 
-## 1 Why GeminiPulse?
+## 1 Why GeminiPulse?
 
 Most wrappers merely pass your text through to the model. GeminiPulse acts as a **Context Weaver**: it scans your codebase, Git history, dependency files, and prior chats, then auto‑builds a world‑class prompt before calling `gemini`. Better prompts → better answers, every time.
 
+**NEW: Run from anywhere in your project!** GeminiPulse now automatically detects your project root and works from any subdirectory.
 
-
-## 2 Architecture at a Glance
+## 2 Architecture at a Glance
 
 ```text
 /your-project/
 ├── .pulse/                 # Project‑local knowledge base
 │   ├── cache/              # ∑ file summaries + embeddings (base64 filenames)
 │   ├── history/            # Timestamped chat logs
-│   └── config              # Per‑project overrides (YAML)
-└── gpulse.sh               # 250‑line POSIX shell script – THAT’S IT
+│   ├── packs/              # Prompt pack templates
+│   ├── codemap.md          # Generated code structure (deep indexing)
+│   └── config              # Per‑project overrides
+└── gpulse.sh               # Single POSIX shell script – THAT'S IT
 ```
 
 > **No binaries. No Node stack.** Delete `.pulse/` and Pulse forgets everything.
 
+## 3 Core Commands
 
-
-## 3 Core Commands
-
-| Command               | Purpose             | How It Works                                   |
-| --------------------- | ------------------- | ---------------------------------------------- |
-| `gpulse init`         | Bootstrap `.pulse/` | mkdir + write default config                   |
-| `gpulse index`        | Summarise codebase  | `find` → `gemini summary` → JSON in `cache/`   |
-| `gpulse index --deep` | Build code map      | `ctags`/`tree‑sitter` for function & class map |
-| `gpulse ask "…"`      | Context Q\&A        | rank cache + `git diff` ± deps → weave prompt  |
-| `gpulse chat`         | Stateful REPL       | Send growing `history/` log each turn          |
-| `gpulse commit`       | AI commit msg       | Staged diff → `gemini` → Conventional Commit   |
+| Command                    | Purpose                    | How It Works                                   |
+| -------------------------- | -------------------------- | ---------------------------------------------- |
+| `gpulse init`              | Bootstrap `.pulse/`        | mkdir + write default config                   |
+| `gpulse index`             | **Deep** codebase analysis | `find` → `gemini analysis` → JSON in `cache/`  |
+| `gpulse index --simple`    | Basic codebase summary     | Simple summaries for quick indexing            |
+| `gpulse index --dir <path>`| **Targeted** indexing      | Index only specific directories                |
+| `gpulse ask "…"`           | Context Q&A                | rank cache + `git diff` ± deps → weave prompt  |
+| `gpulse chat`              | Stateful REPL              | Send growing `history/` log each turn          |
+| `gpulse commit`            | AI commit msg              | Staged diff → `gemini` → Conventional Commit   |
 
 All verbs live in **one** file (`gpulse.sh`) so you can read, audit, and hack it in minutes.
 
-
-
-## 4 Installation
+## 4 Installation
 
 ```bash
 git clone https://github.com/<org>/gemini‑pulse.git
@@ -87,14 +86,12 @@ gpulse --help  # sanity check
 
 Requires: POSIX shell, `git`, and the official `gemini` binary in `$PATH`.
 
-
-
-## 5 Quick Start
+## 5 Quick Start
 
 ```bash
-# Inside your project
+# Inside your project (or any subdirectory!)
 gpulse init
-gpulse index          # ~seconds
+gpulse index          # Deep analysis by default
 
 # Ask a question
 gpulse ask "Refactor auth.js to handle JWT expiry gracefully"
@@ -102,9 +99,44 @@ gpulse ask "Refactor auth.js to handle JWT expiry gracefully"
 
 Pulse selects the most relevant summaries, splices in your uncommitted diff, embeds dependency data from `package.json`, and fires one composite prompt at Gemini. Response quality goes 📈 while token usage goes 📉.
 
+## 6 Advanced Indexing Options
 
+### 🚀 Run from Anywhere
+```bash
+# Works from project root
+cd /path/to/your/project
+gpulse index
 
-## 6 Personality Presets & Prompt Packs
+# Works from any subdirectory
+cd /path/to/your/project/src/components
+gpulse index  # Automatically finds project root
+```
+
+### 📁 Targeted Indexing
+```bash
+# Index only source code
+gpulse index --dir src/
+
+# Index only tests
+gpulse index --dir tests/
+
+# Index specific service
+gpulse index --dir cmd/services/korl-acsg
+
+# Index with simple analysis
+gpulse index --dir src/ --simple
+```
+
+### 🔍 Smart File Filtering
+GeminiPulse automatically excludes:
+- **Build artifacts**: `dist/`, `build/`, `target/`, `bin/`, `obj/`
+- **Dependencies**: `node_modules/`, `.next/`, `.nuxt/`, `.cache/`
+- **Version control**: `.git/`, `.github/`
+- **IDE files**: `.vscode/`, `.idea/`
+- **Config files**: `.gitignore`, `.dockerignore`, lock files
+- **Binary files**: executables, libraries, archives, minified files
+
+## 7 Personality Presets & Prompt Packs
 
 GeminiPulse ships with **Prompt Packs**—pre‑tuned persona templates you can toggle per query:
 
@@ -118,11 +150,9 @@ GeminiPulse ships with **Prompt Packs**—pre‑tuned persona templates you can 
 
 Prompt Packs live in `.pulse/packs/*.md`. Add your own by dropping a markdown file—first line becomes the system prompt.
 
+## 8 Extending Pulse (add your own verbs)
 
-
-## 7 Extending Pulse (add your own verbs)
-
-Because it’s plain shell, new commands take \~10 lines:
+Because it's plain shell, new commands take ~10 lines:
 
 ```sh
 # gpulse blame – Explain why a line changed
@@ -137,12 +167,10 @@ fi
 
 Commit the chunk, run `gpulse blame myfile.py 42`, done.
 
-
-
-## 8 Deeper, “Fuzzy” Contextual Understanding
+## 9 Deeper, "Fuzzy" Contextual Understanding
 
 * **Dynamic Context Ranking** – Grep is fine; ranking is better. Pulse scores cached summaries and feeds only the top 3–5 snippets to the model.
-* **Code‑Structure Awareness** – `gpulse index --deep` builds a tag map so you can ask:
+* **Code‑Structure Awareness** – `gpulse index` (now deep by default) builds a tag map so you can ask:
 
   ```bash
   gpulse ask "What does calculate_total() in billing.py do?"
@@ -153,82 +181,101 @@ Commit the chunk, run `gpulse blame myfile.py 42`, done.
   gpulse ask "Use axios to POST JSON in this project"
   ```
 
-
-
-## 9 Configuration Reference (`.pulse/config`)
+## 10 Configuration Reference (`.pulse/config`)
 
 ```yaml
-model: gemini-1.5-pro
+# Model configuration
+model: gemini-2.5-pro
+gemini_cmd: gemini
+
+# Indexing options
 rank_top_k: 5            # how many snippets to embed
-packs_enabled:
-  - code-guru
-  - architect
-history_max_tokens: 12000
+debug: 0                 # enable debug output
+
+# Global config at ~/.config/gpulse/config
+# Project config at .pulse/config (overrides global)
 ```
 
-Override any value per‑repo; global defaults live at `~/.config/gpulse/config`.
+### Environment Variables
+| Variable        | Purpose            | Default      |
+| --------------- | ------------------ | ------------ |
+| `GEMINI_CMD`    | Override gemini path| auto-detect  |
+| `GEMINI_MODEL`  | Override model     | config value |
+| `GPULSE_DEBUG`  | Enable debug mode  | 0            |
 
-
-
-## 10 Example Workflows
+## 11 Example Workflows
 
 **A. Code Review**
-
 ```bash
 git add .
 gpulse commit                 # AI writes Conventional Commit
-
 gpulse chat -p code-guru      # start review session
 ```
 
 **B. README Generator**
-
 ```bash
-gpulse index --deep
+gpulse index --dir src/       # Index only source code
 gpulse ask -p doc-smith "Generate a top‑tier README for this repo"
 ```
 
+**C. Service-Specific Analysis**
+```bash
+cd cmd/services/my-service
+gpulse index --dir .          # Index only this service
+gpulse ask "How does authentication work here?"
+```
 
+**D. Quick Documentation**
+```bash
+gpulse index --dir docs/ --simple  # Quick index of docs
+gpulse ask "Summarize the API documentation"
+```
 
-## 11 Environment Flags & Variables
+## 12 Migration Guide
 
-| Flag / Var       | Purpose            | Default      |
-| ---------------- | ------------------ | ------------ |
-| `-p, --pack`     | Select Prompt Pack | none         |
-| `GPULSE_MODEL`   | Override model     | config value |
-| `GPULSE_RANK_K`  | Top‑K snippets     | 5            |
-| `GPULSE_DEBUG=1` | Verbose tracing    | off          |
+### From Previous Versions
+- **Deep indexing is now default**: Use `--simple` for basic indexing
+- **Improved exclusions**: Some files that were previously indexed may now be skipped
+- **Subdirectory support**: Run from anywhere in your project
+- **Targeted indexing**: Use `--dir` for faster, focused indexing
 
----
+### Existing Caches
+- All existing caches remain compatible
+- No changes needed for existing workflows
+- New features are additive and backward-compatible
 
-## 12 Roadmap
+## 13 Troubleshooting
 
-* Vector search backend (SQLite + cosine)
-* Plugin directory (`.pulse/plugins/*.sh`)
-* Remote cache sync (Git LFS)
-* **Inline Diff Reviewer** (`gpulse review`) – annotate diff with AI comments.
+### Common Issues
+```bash
+# "Not inside a git repo"
+# Solution: Run from project root or any subdirectory within the repo
+cd /path/to/your/project
+gpulse init
 
+# "Pulse not initialized"
+# Solution: Initialize the project
+gpulse init
 
+# "Command not found"
+# Solution: Install gemini CLI
+npm install -g gemini-cli
+# or
+pnpm add -g gemini-cli
+```
 
-## 13 Troubleshooting
+### Debug Mode
+```bash
+GPULSE_DEBUG=1 gpulse index  # Enable verbose output
+```
 
-| Symptom                      | Fix                                              |
-| ---------------------------- | ------------------------------------------------ |
-| `command not found: gemini`  | Install `gemini-cli` and ensure it’s in `$PATH`. |
-| “No snippets ranked”         | Run `gpulse index` or increase `rank_top_k`.     |
-| Model returns 400 tokens max | You’re on a free tier—switch model in config.    |
-
----
-
-## 14 Contributing
+## 14 Contributing
 
 Pull requests welcome. Keep it POSIX, keep it readable. All new verbs **must** fit in `gpulse.sh` or live under `.pulse/plugins/`.
 
+## 15 License
 
-
-## 15 License
-
-MIT © 2025 \Bryan Cruse\thecorneroftheweb.com
+MIT © 2025 \Bryan Cruse\thecorneroftheweb.com
 
 ## if you liked what i made
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/itsbryandude)

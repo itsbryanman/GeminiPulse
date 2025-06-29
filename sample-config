@@ -1,0 +1,64 @@
+# GeminiPulse Configuration File
+# ================================
+# This file can be placed in:
+#   - .pulse/config (project-specific settings)
+#   - ~/.config/gpulse/config (global user settings)
+#
+# Format: key=value (no spaces around =)
+# Lines starting with # are comments
+# Empty lines are ignored
+
+# Model Configuration
+# -------------------
+# The Gemini model to use for all operations
+# Available models (as of 2024):
+#   - gemini-2.5-flash-thinking
+#   - gemini-2.5-pro (latest, most capable)
+# Default: gemini-2.5-pro
+model=gemini-2.5-pro
+
+# Gemini Command Path
+# -------------------
+# Path to the gemini executable
+# Leave commented to use auto-detection
+# Default: auto-detect (searches common locations)
+# gemini_cmd=/home/user/.local/bin/gemini
+# gemini_cmd=/usr/local/bin/gemini
+# gemini_cmd=/home/user/.local/share/pnpm/gemini
+
+# Context Configuration
+# ---------------------
+# Number of context snippets to include when searching
+# Higher values = more context but slower and more tokens
+# Default: 5
+rank_top_k=5
+
+# Debug Mode
+# ----------
+# Enable verbose debug output
+# Shows config loading, command execution, context gathering
+# 0 = off, 1 = on
+# Default: 0
+debug=0
+
+# ================================
+# Environment Variable Overrides
+# ================================
+# These environment variables override config file settings:
+#
+# GEMINI_CMD=/path/to/gemini
+# GEMINI_MODEL=gemini-1.5-flash
+# GPULSE_DEBUG=1
+# GPULSE_SIMPLE_SPINNER=1
+#
+# Example usage:
+#   GEMINI_MODEL=gemini-1.5-flash gpulse ask "Quick question"
+#   GPULSE_DEBUG=1 gpulse chat
+
+# ================================
+# Precedence Order (highest to lowest)
+# ================================
+# 1. Environment variables (GEMINI_MODEL, etc.)
+# 2. Project config (.pulse/config)
+# 3. Global config (~/.config/gpulse/config)
+# 4. Built-in defaults
