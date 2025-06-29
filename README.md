@@ -4,12 +4,7 @@
 _Single‑script shell tool that feeds Gemini your code, diffs & deps for smarter, project‑aware answers._
 
 <p align="center">
-  <!-- latest release -->
-  <img src="https://img.shields.io/github/v/release/itsbryanman/gemini-pulse?style=for-the-badge" alt="Latest release">
-
-  <!-- build status (adjust workflow filename if needed) -->
-  <img src="https://img.shields.io/github/actions/workflow/status/itsbryanman/gemini-pulse/test.yml?branch=main&style=for-the-badge" alt="Build">
-
+  
   <!-- main language -->
   <img src="https://img.shields.io/badge/Shell-Bash-4EAA25?logo=gnu-bash&logoColor=white&style=for-the-badge" alt="Shell">
 
@@ -19,8 +14,7 @@ _Single‑script shell tool that feeds Gemini your code, diffs & deps for sm
   <!-- tests passing (generic badge; swap if you wire up coverage) -->
   <img src="https://img.shields.io/badge/Tests-Passing-brightgreen?style=for-the-badge" alt="Tests">
 
-  <!-- license -->
-  <img src="https://img.shields.io/github/license/itsbryanman/gemini-pulse?style=for-the-badge" alt="MIT License">
+  
 
   <!-- Google Gemini badge -->
   <img src="https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Powered by Google Gemini">
