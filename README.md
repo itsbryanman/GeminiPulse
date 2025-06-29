@@ -78,7 +78,7 @@ All verbs live in **one** file (`gpulse.sh`) so you can read, audit, and hack it
 ## 4 Installation
 
 ```bash
-git clone https://github.com/<org>/gemini‑pulse.git
+git clone https://github.com/itsbryanman/GeminiPulse.git
 cd gemini‑pulse
 ./install.sh   # copies gpulse.sh to /usr/local/bin and chmod +x
 

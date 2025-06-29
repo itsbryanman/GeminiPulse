@@ -9,8 +9,8 @@ need(){ command -v "$1" &>/dev/null || die "Missing '$1'."; }
 
 say "GeminiPulse installer…" "$B"
 for c in node npm git base64; do need "$c"; done
-npm list -g @google-gemini/cli &>/dev/null || \
-  die "Install gemini CLI first: npm i -g @google-gemini/cli"
+npm list -g @google/gemini-cli &>/dev/null || \
+  die "Install gemini CLI first: npm i -g @google/gemini-cli"
 
 [ -f "$SRC" ] || die "$SRC not found."
 sudo_cmd=""; [ -w "$INSTALL_DIR" ] || sudo_cmd="sudo"
