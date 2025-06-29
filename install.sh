@@ -15,5 +15,21 @@ npm list -g @google/gemini-cli &>/dev/null || \
 [ -f "$SRC" ] || die "$SRC not found."
 sudo_cmd=""; [ -w "$INSTALL_DIR" ] || sudo_cmd="sudo"
 $sudo_cmd install -Dm755 "$SRC" "$INSTALL_DIR/$BIN"
+
+# Define source and destination for template packs
+SOURCE_PACKS_DIR="$(dirname "$0")/template/packs"
+GLOBAL_PACKS_DEST_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/gpulse/templates/packs"
+
+# Create the destination directory if it doesn't exist
+$sudo_cmd mkdir -p "$GLOBAL_PACKS_DEST_DIR"
+
+# Copy template packs
+if [ -d "$SOURCE_PACKS_DIR" ]; then
+  $sudo_cmd cp -n "$SOURCE_PACKS_DIR"/*.md "$GLOBAL_PACKS_DEST_DIR/" 2>/dev/null || true
+  say "✔ Template packs copied to $GLOBAL_PACKS_DEST_DIR" "$G"
+else
+  say "⚠ Template packs not found at $SOURCE_PACKS_DIR. Skipping copy." "$Y"
+fi
+
 "$BIN" --help &>/dev/null || die "$BIN self‑test failed."
 say "✔ Installed to $INSTALL_DIR/$BIN" "$G"

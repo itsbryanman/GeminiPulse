@@ -8,6 +8,7 @@ IFS=$'\n\t'
 # --------- CONFIG ------------------------------------------------
 GEMINI_CMD="${GEMINI_CMD:-gemini}"     # override with env
 PULSE_DIR=".pulse"; CACHE="$PULSE_DIR/cache"; HIST="$PULSE_DIR/history"
+GLOBAL_PACKS_DEST_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/gpulse/templates/packs"
 VERSION="0.2.0"
 
 # --------- COLORS ------------------------------------------------
@@ -23,8 +24,10 @@ need_cmd()    { command -v "$1" &>/dev/null || die "Missing '$1'."; }
 # --------- COMMANDS ---------------------------------------------
 init() {
   mkdir -p "$CACHE" "$HIST" "$PULSE_DIR/packs"
-  # seed default packs if template exists
-  if [ -d "$(dirname "$0")/template/packs" ]; then
+  # seed default packs
+  if [ -d "$GLOBAL_PACKS_DEST_DIR" ]; then
+    cp -n "$GLOBAL_PACKS_DEST_DIR"/*.md "$PULSE_DIR/packs/" 2>/dev/null || true
+  elif [ -d "$(dirname "$0")/template/packs" ]; then
     cp -n "$(dirname "$0")"/template/packs/*.md "$PULSE_DIR/packs/" 2>/dev/null || true
   fi
   grep -qxF ".pulse/" .gitignore 2>/dev/null || echo ".pulse/" >> .gitignore
