@@ -25,8 +25,7 @@ Single‑script shell tool that feeds Gemini your code, diffs & deps for sma
 
 </p>
 
-<details>
-<summary>ASCII logo</summary>
+
 
 
 ```
